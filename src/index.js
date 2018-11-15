@@ -5,8 +5,11 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import Reducer from "./Store/reducer";
-const store = createStore(Reducer);
+import BurgerBuilderReducer from "./Store/reducer/BurgerBuilder";
+const store = createStore(
+  BurgerBuilderReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 const app = (
   <Provider store={store}>
     <BrowserRouter>

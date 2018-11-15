@@ -6,8 +6,9 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import withErrorHandler from "../../components/withErrorHandler/withErrorHandler";
 import axios from "../../Axios-orders.jsx";
 import { connect } from "react-redux";
-import * as actionTypes from "../../Store/actions";
+import * as actionTypes from "../../Store/actions/actions";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import * as BurgerBuilderActions from "../../Store/actions/index";
 const INGREDIENT_PRICES = {
   salad: 0.5,
   bacon: 0.7,
@@ -154,12 +155,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingName =>
-      dispatch({ type: actionTypes.ADD_INGREDIENTS, ingredientName: ingName }),
+      dispatch(BurgerBuilderActions.addIngredient(ingName)),
     onIngredientRemoved: ingName =>
-      dispatch({
-        type: actionTypes.REMOVE_INGREDIENTS,
-        ingredientName: ingName
-      })
+      dispatch(BurgerBuilderActions.addIngredient(ingName))
   };
 };
 export default connect(
