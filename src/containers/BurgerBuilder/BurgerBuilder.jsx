@@ -6,7 +6,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import withErrorHandler from "../../components/withErrorHandler/withErrorHandler";
 import axios from "../../Axios-orders.jsx";
 import { connect } from "react-redux";
-import * as actionTypes from "../../Store/actions/actions";
+
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as BurgerBuilderActions from "../../Store/actions/index";
 const INGREDIENT_PRICES = {
@@ -84,14 +84,7 @@ class BurgerBuilder extends Component {
     this.props.history.push("/checkout");
   };
   componentDidMount() {
-    axios
-      .get("https://burger-builder-1c167.firebaseio.com/ingredients.json")
-      .then(response => {
-        this.setState({ ingredients: response.data });
-      })
-      .catch(error => {
-        this.setState({ error: true });
-      });
+    this.props.onInitIngredients();
   }
   render() {
     const disabledInfo = { ...this.props.ings };
@@ -100,7 +93,7 @@ class BurgerBuilder extends Component {
     }
     let orderSummary = null;
 
-    let burger = this.state.error ? (
+    let burger = this.props.error ? (
       <p>ingredients can't be loaded</p>
     ) : (
       <Spinner />
@@ -149,7 +142,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.ingredients,
-    price: state.totalPrice
+    price: state.totalPrice,
+    error: state.error
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -157,7 +151,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingName =>
       dispatch(BurgerBuilderActions.addIngredient(ingName)),
     onIngredientRemoved: ingName =>
-      dispatch(BurgerBuilderActions.addIngredient(ingName))
+      dispatch(BurgerBuilderActions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(BurgerBuilderActions.initIngredients())
   };
 };
 export default connect(
