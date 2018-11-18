@@ -8,7 +8,7 @@ import axios from "../../Axios-orders.jsx";
 import { connect } from "react-redux";
 
 import Spinner from "../../components/UI/Spinner/Spinner";
-import * as BurgerBuilderActions from "../../Store/actions/index";
+import * as actions from "../../Store/actions/index";
 const INGREDIENT_PRICES = {
   salad: 0.5,
   bacon: 0.7,
@@ -80,7 +80,7 @@ class BurgerBuilder extends Component {
   };
   handleContinue = () => {
     //alert("purchase continue");
-
+    this.props.onInitPurchase();
     this.props.history.push("/checkout");
   };
   componentDidMount() {
@@ -148,11 +148,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: ingName =>
-      dispatch(BurgerBuilderActions.addIngredient(ingName)),
-    onIngredientRemoved: ingName =>
-      dispatch(BurgerBuilderActions.removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(BurgerBuilderActions.initIngredients())
+    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   };
 };
 export default connect(
