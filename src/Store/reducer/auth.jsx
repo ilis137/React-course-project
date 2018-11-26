@@ -25,6 +25,11 @@ const reducer = (state = initialState, action) => {
         userId: null,
         error: action.error
       });
+    case actionTypes.AUTH_LOGOUT:
+      return updateObject(state, {
+        token: null,
+        userId: null
+      });
     default:
       return state;
   }
