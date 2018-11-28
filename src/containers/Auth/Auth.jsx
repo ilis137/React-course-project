@@ -5,7 +5,7 @@ import classes from "./Auth.module.css";
 import * as actions from "../../Store/actions/index";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
-import Redirect from "react-router-dom";
+import { Redirect } from "react-router-dom";
 class Auth extends Component {
   state = {
     controls: {

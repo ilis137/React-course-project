@@ -19,7 +19,8 @@ class BurgerBuilder extends Component {
   state = {
     purchasing: false,
     loading: false,
-    error: false
+    error: false,
+    building: false
   };
   addIngrdientHandler = type => {
     const oldCount = this.state.ingredients[type];
@@ -71,7 +72,11 @@ class BurgerBuilder extends Component {
   };
 
   handlePurchase = () => {
-    this.setState({ purchasing: true });
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.history.push("/auth");
+    }
   };
   handlePurchaseCanceled = () => {
     this.setState({
@@ -87,6 +92,7 @@ class BurgerBuilder extends Component {
     this.props.onInitIngredients();
   }
   render() {
+    console.log(this.props.match);
     const disabledInfo = { ...this.props.ings };
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
@@ -109,6 +115,7 @@ class BurgerBuilder extends Component {
             price={this.props.price}
             purchasable={this.updatePurchasable(this.props.ings)}
             purchase={this.handlePurchase}
+            isAuth={this.props.isAuthenticated}
           />
         </>
       );
@@ -143,7 +150,8 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    error: state.burgerBuilder.error
+    error: state.burgerBuilder.error,
+    isAuthenticated: state.auth.token != null
   };
 };
 const mapDispatchToProps = dispatch => {

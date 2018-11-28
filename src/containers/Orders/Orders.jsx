@@ -10,6 +10,7 @@ class Orders extends Component {
     this.props.onFetchOrders(this.props.token);
   }
   render() {
+    console.log(this.props.match);
     let Orders = <Spinner />;
     if (!this.props.loading) {
       Orders = (
